@@ -42,7 +42,7 @@ echo "$parameterD"
 ################################
 # Install Dependancies
 ################################
-sudo apt update && sudo apt install libaio1 libmecab2 libncurses5 sysbench expect -y
+sudo apt update && sudo apt install libaio1 libmecab2 libncurses5 dos2unix sysbench expect -y
 cd ~
 
 ################################
@@ -65,6 +65,7 @@ NoOfReplicas=3	# Number of replicas
 # Management process options:
 hostname=$parameterA  # Hostname of the manager
 datadir=/var/lib/mysql-cluster          # Directory for the log files
+NodeId=1
 
 [ndbd]
 hostname=$parameterB   # Hostname/IP of the first data node
@@ -86,6 +87,7 @@ datadir=/usr/local/mysql/data	        # Remote directory for the data files
 hostname=$parameterA
 EOF
 
+dos2unix config.ini
 sudo cp config.ini /var/lib/mysql-cluster/
 
 ################################
@@ -107,6 +109,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 
+dos2unix config.ini
 sudo cp ndb_mgmd.service /etc/systemd/system/
 
 ################################
