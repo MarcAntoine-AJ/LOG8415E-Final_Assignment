@@ -93,12 +93,12 @@ sudo cp config.ini /var/lib/mysql-cluster/
 ################################
 cat <<EOF >ndb_mgmd.service
 [Unit]
-Description=MySQL NDB Data Node Daemon
+Description=MySQL NDB Cluster Management Server
 After=network.target auditd.service
 
 [Service]
 Type=forking
-ExecStart=/usr/sbin/ndbd
+ExecStart=/usr/sbin/ndb_mgmd -f /var/lib/mysql-cluster/config.ini
 ExecReload=/bin/kill -HUP \$MAINPID
 KillMode=process
 Restart=on-failure
