@@ -87,7 +87,7 @@ datadir=/usr/local/mysql/data	        # Remote directory for the data files
 hostname=$parameterA
 EOF
 
-dos2unix config.ini
+sudo dos2unix config.ini
 sudo cp config.ini /var/lib/mysql-cluster/
 
 ################################
@@ -109,7 +109,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 
-dos2unix config.ini
+sudo dos2unix config.ini
 sudo cp ndb_mgmd.service /etc/systemd/system/
 
 ################################
