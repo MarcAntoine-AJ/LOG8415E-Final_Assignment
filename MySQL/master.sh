@@ -114,4 +114,5 @@ sudo cp ndb_mgmd.service /etc/systemd/system/
 ################################
 sudo systemctl daemon-reload 
 sudo systemctl enable ndb_mgmd 
-sudo systemctl start ndb_mgmd sudo systemctl status ndb_mgmd
+sudo systemctl start ndb_mgmd
+sudo systemctl status ndb_mgmd
