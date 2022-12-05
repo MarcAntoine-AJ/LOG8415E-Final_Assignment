@@ -76,6 +76,6 @@ sudo cp ndbd.service /etc/systemd/system/
 ################################
 # Start service
 ################################
-systemctl daemon-reload
-systemctl enable ndbd
-systemctl start ndbd
+sudo systemctl daemon-reload
+sudo systemctl enable ndbd
+sudo systemctl start ndbd
