@@ -12,9 +12,9 @@ terraform {
 
 provider "aws" {
   region     = "us-east-1"
-  access_key = "ASIAZ3DCZEO2GOCTYWCV"
-  secret_key = "ol8ijDRIZzi97JLNvGOlYVOKEDZxZ9M0TkwXf/rh"
-  token      = "FwoGZXIvYXdzENr//////////wEaDFsheu7tOmduZtH+wiLJAat0PS2wTXhbPJVJimMoNdLDyyGJTzZpjS7JuRZs3LeqrIv91+hEgsuaH5Uf9eIgNSaDnBbwgyKTy/Ed6B6EF+SZIpPD63YS/PAmGO7iWCtCeOuo52nTzRBZqn+FE6gJo2rusyQloK5RjrBlSGPaa8CbCWtCYmZKn1PNuWnwl+O9kbU8gHwdOgIkbqg2GppmDq7jTeudHw1/Y3NmIguaxbYEJHaglDge65fwRTjK2jIkyM8TyB8tTmE1qhI6QZdR+7SR8KIESIrvuSjRhrWcBjItxHJZpoDHxiEtqQ38p0wQVUDnQv4rIT8zhoKXdurwYmmRBy+WR1jGWMtKsA34"
+  access_key = "ASIAZ3DCZEO2E76NVFX3"
+  secret_key = "rkl/sRGdkbs63NApKoqVdufmO1vOycrB4/sQDJgD"
+  token      = "FwoGZXIvYXdzEDgaDGFkw3P+ZGc0gqvw5SLJAfNOis1g7Mov67WvGQGN8a7ItsGaefRt05SP07UxhphEM8YS9tIy/TWDX98cl9b1s0/rxtVBZuhWWMIhLnThGjt+5V8rX9diIfxz9xSojrE0vMyi7C8QTNJaz+UYM21Jh7NbgbV6+kmToyph8fo0mCOfYHLmELUScCvBuAnc9s7iUnMGIRX/AhCMaa0/hMSrDXesyleM/3zrrBXAOyjwt63QT4zovyMVCGZTkKgmNfknLHl9+SblWWmn2/ZyzIztjIEZLT8BZXMm1yiNxMmcBjItGBm47rXXdz87VRez5o5EPnL9n/8HTYfEuYXlBh+iSOf9u+KGZR2DDBBH7/Bb"
 }
 
 
@@ -48,6 +48,7 @@ resource "aws_instance" "stand-alone-MYSQL" {
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
   user_data              = file("standalone_userdata.sh")
+  key_name               = aws_key_pair.kp.key_name
 }
 
 resource "aws_instance" "cluster-MYSQL-data-node1" {
@@ -55,6 +56,7 @@ resource "aws_instance" "cluster-MYSQL-data-node1" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
+  key_name               = aws_key_pair.kp.key_name
   tags = {
     Name = "Data Node 1"
   }
@@ -65,6 +67,7 @@ resource "aws_instance" "cluster-MYSQL-data-node2" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
+  key_name               = aws_key_pair.kp.key_name
   tags = {
     Name = "Data Node 2"
   }
@@ -74,6 +77,7 @@ resource "aws_instance" "cluster-MYSQL-data-node3" {
   ami                    = "ami-0149b2da6ceec4bb0"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.security_gp.id]
+  key_name               = aws_key_pair.kp.key_name
   availability_zone      = "us-east-1c"
   tags = {
     Name = "Data Node 3"
@@ -85,7 +89,35 @@ resource "aws_instance" "cluster-MYSQL-management-node" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
+  key_name               = aws_key_pair.kp.key_name
+  user_data              = file("standalone_userdata.sh")
   tags = {
     Name = "Management Node"
+  }
+}
+
+resource "aws_instance" "proxy" {
+  ami                    = "ami-0149b2da6ceec4bb0"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.security_gp.id]
+  availability_zone      = "us-east-1c"
+  key_name               = aws_key_pair.kp.key_name
+  tags = {
+    Name = "Management Node"
+  }
+}
+
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "kp" {
+  key_name   = "myKey" # Create "myKey" to AWS!!
+  public_key = tls_private_key.pk.public_key_openssh
+
+  provisioner "local-exec" { # Create "myKey.pem" to your computer!!
+    command = "'${nonsensitive(tls_private_key.pk.private_key_pem)}' | Out-File -FilePath .\\keypair.pem"
+    interpreter = ["PowerShell", "-Command"]
   }
 }

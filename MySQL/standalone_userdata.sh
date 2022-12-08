@@ -52,3 +52,7 @@ rm -v ~/secure_our_mysql.sh # Remove the generated Expect script
 #sudo apt-get -qq purge expect > /dev/null # Uninstall Expect, commented out in case you need Expect
 
 echo "MySQL setup completed. Insecure defaults are gone. Please remove this script manually when you are done with it (or at least remove the MySQL root password that you put inside it."
+
+apt get update && apt install python3.8 python3-pip
+pip3 install sshtunnel
+pip3 install PyMySQL
