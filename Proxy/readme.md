@@ -1,1 +1,1 @@
-Execute the following python script on an AWS instance. 
+Execute the following python script on an AWS instance. Don't forget to dos2unix the keypair.pem file before execution.
