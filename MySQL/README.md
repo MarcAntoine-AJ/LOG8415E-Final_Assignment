@@ -2,13 +2,13 @@
 - git clone https://github.com/MarcAntoine-AJ/LOG8415E-Final_Assignment.git
 - cd LOG8415E-Final_Assignment/MySQL/
 - chmod 777 master.sh
-- ./master.sh -a "ip-172-31-42-184.ec2.internal" -b "ip-172-31-39-200.ec2.internal" -c "ip-172-31-37-145.ec2.internal" -d "ip-172-31-41-74.ec2.internal"
+- ./master.sh -a "ip-172-31-35-156.ec2.internal" -b "ip-172-31-38-105.ec2.internal" -c "ip-172-31-36-221.ec2.internal" -d "ip-172-31-43-141.ec2.internal"
 
 ## 2. On slave node
 - git clone https://github.com/MarcAntoine-AJ/LOG8415E-Final_Assignment.git
 - cd LOG8415E-Final_Assignment/MySQL/
 - chmod 777 slave.sh
-- ./slave.sh -a "ip-172-31-42-184.ec2.internal"
+- ./slave.sh -a "ip-172-31-35-156.ec2.internal"
 
 ## 3. On master node
 - chmod 777 master2.sh
@@ -24,7 +24,7 @@
             ndbcluster  # run NDB storage engine
 
             [mysql_cluster]
-            ndb-connectstring=ip-172-31-36-143.ec2.internal # location of management server
+            ndb-connectstring=ip-172-31-35-156.ec2.internal # location of management server
 
 - sudo systemctl restart mysql
 - sudo systemctl enable mysql
