@@ -7,16 +7,11 @@ slaves = []
 def connect(slave_ip, master_ip):
     with SSHTunnelForwarder (slave_ip, ssh_username='ubuntu', ssh_pkey='keypair.pem', remote_bind_address=(master_ip, 3306)) as tunnel:
         conn = pymysql.connect(host=master_ip, user='user', password='password', db='sakila', port=3306, autocommit=True)
+        print(conn)
         cursor = conn.cursor()
         operation = 'SELECT * FROM actor;'
-        for result in cursor.execute(operation):
-            if result.with_rows:
-                print("Rows produced by statement '{}':".format(
-                result.statement))
-                print(result.fetchall())
-            else:
-                print("Number of rows affected by statement '{}': {}".format(
-                result.statement, result.rowcount))
+        cursor.execute(operation)
+        print(cursor.fetchall())
         return conn
 
 def ping_host(host):
