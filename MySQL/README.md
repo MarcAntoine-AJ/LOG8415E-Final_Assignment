@@ -49,5 +49,5 @@
 
 
 ## 6. Add a user for the proxy
-CREATE USER 'usrname'@'proxy_public_ip' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON * . * TO 'usrname'@'proxy_public_ip';
+- CREATE USER 'usrname'@'proxy_public_ip' IDENTIFIED BY 'password';
+- GRANT ALL PRIVILEGES ON * . * TO 'usrname'@'proxy_public_ip';
