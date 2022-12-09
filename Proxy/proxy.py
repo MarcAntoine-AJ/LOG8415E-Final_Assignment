@@ -7,10 +7,10 @@ from sshtunnel import SSHTunnelForwarder
 slaves = []
 
 def connect(slave_ip, master_ip):
-    with SSHTunnelForwarder (slave_ip, ssh_username='ubuntu', ssh_pkey='keypair.pem', remote_bind_address=(master_ip, 3306)) as tunnel:
-        conn = pymysql.connect(host=master_ip, user='user', password='password', db='sakila', port=3306, autocommit=True)
-        print(conn)
-        return conn
+    #with SSHTunnelForwarder (slave_ip, ssh_username='ubuntu', ssh_pkey='keypair.pem', remote_bind_address=(master_ip, 3306)) as tunnel:
+    conn = pymysql.connect(host=master_ip, user='user', password='password', db='sakila', port=3306, autocommit=True)
+    print(conn)
+    return conn
 
 def ping_host(host):
     return ping(target=host, count=1, timeout=2).rtt_avg_ms

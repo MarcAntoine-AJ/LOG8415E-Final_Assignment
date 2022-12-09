@@ -46,5 +46,5 @@
 - SHOW FULL TABLES;
 - You should see the sakila tables. 
 
-CREATE USER 'user'@'54.158.41.150' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON * . * TO 'user'@'54.158.41.150';
+CREATE USER 'user'@'3.85.217.233' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON * . * TO 'user'@'3.85.217.233';
