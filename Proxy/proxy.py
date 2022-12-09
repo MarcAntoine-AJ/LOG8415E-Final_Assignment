@@ -1,7 +1,5 @@
 import pymysql
-import sys
 from pythonping import ping
-import pandas as pd
 from sshtunnel import SSHTunnelForwarder
 
 slaves = []
@@ -19,6 +17,8 @@ def lowest_res_slave():
     response_times = [ping_host(slave) for slave in slaves]
     fastest_slave = min(range(len(response_times)), key=response_times.__getitem__)
     return fastest_slave
-    
-connection = connect('34.204.84.12', '54.158.41.150')
+
+management_node_ip = '54.158.41.150'
+data_node_ip = '34.204.84.12'
+connection = connect(data_node_ip, management_node_ip)
 

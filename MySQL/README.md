@@ -22,6 +22,7 @@
 
             [mysqld]
             ndbcluster  # run NDB storage engine
+            bind-address=0.0.0.0
 
             [mysql_cluster]
             ndb-connectstring=ip-172-31-35-156.ec2.internal # location of management server
@@ -46,5 +47,7 @@
 - SHOW FULL TABLES;
 - You should see the sakila tables. 
 
-CREATE USER 'user'@'3.85.217.233' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON * . * TO 'user'@'3.85.217.233';
+
+## 6. Add a user for the proxy
+CREATE USER 'usrname'@'proxy_public_ip' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON * . * TO 'usrname'@'proxy_public_ip';
