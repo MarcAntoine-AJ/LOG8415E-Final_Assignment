@@ -90,7 +90,6 @@ resource "aws_instance" "cluster-MYSQL-management-node" {
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
   key_name               = aws_key_pair.kp.key_name
-  user_data              = file("standalone_userdata.sh")
   tags = {
     Name = "Management Node"
   }
@@ -102,8 +101,9 @@ resource "aws_instance" "proxy" {
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
   key_name               = aws_key_pair.kp.key_name
+  user_data              = file("standalone_userdata.sh")
   tags = {
-    Name = "Management Node"
+    Name = "Proxy"
   }
 }
 
@@ -117,7 +117,7 @@ resource "aws_key_pair" "kp" {
   public_key = tls_private_key.pk.public_key_openssh
 
   provisioner "local-exec" { # Create "myKey.pem" to your computer!!
-    command = "'${nonsensitive(tls_private_key.pk.private_key_pem)}' | Out-File -FilePath .\\keypair.pem"
+    command = "'${nonsensitive(tls_private_key.pk.private_key_pem)}' | Out-File -FilePath ..\\Proxy\\keypair.pem"
     interpreter = ["PowerShell", "-Command"]
   }
 }

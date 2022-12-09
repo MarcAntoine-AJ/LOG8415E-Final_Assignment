@@ -20,5 +20,5 @@ def lowest_res_slave():
     fastest_slave = min(range(len(response_times)), key=response_times.__getitem__)
     return fastest_slave
     
-connection = connect('192.12', '1234.12')
+connection = connect('54.157.30.28', '3.81.8.205')
 
