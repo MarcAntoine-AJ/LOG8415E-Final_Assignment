@@ -26,6 +26,7 @@ def lowest_res_slave(slaves):
         if ping_time < min:
             best_slave = slave
             min = ping_time
+    print('Lowest Ping :', min)
     return best_slave
 
 def direct_hit(management_node_ip, query):
