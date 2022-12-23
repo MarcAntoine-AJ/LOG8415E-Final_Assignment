@@ -1,16 +1,19 @@
 ## 1. On master node
+
 - git clone https://github.com/MarcAntoine-AJ/LOG8415E-Final_Assignment.git
 - cd LOG8415E-Final_Assignment/MySQL/
 - chmod 777 master.sh
-- ./master.sh -a "ip-172-31-35-156.ec2.internal" -b "ip-172-31-38-105.ec2.internal" -c "ip-172-31-36-221.ec2.internal" -d "ip-172-31-43-141.ec2.internal"
+- ./master.sh -a "mngmt_private_dns" -b "data_node1_private_dns" -c "data_node2_private_dns" -d "data_node3_private_dns"
 
 ## 2. On slave node
+
 - git clone https://github.com/MarcAntoine-AJ/LOG8415E-Final_Assignment.git
 - cd LOG8415E-Final_Assignment/MySQL/
 - chmod 777 slave.sh
-- ./slave.sh -a "ip-172-31-35-156.ec2.internal"
+- ./slave.sh -a "mngmt_private_dns"
 
 ## 3. On master node
+
 - chmod 777 master2.sh
 - ./master2.sh
 - cd ~
@@ -25,29 +28,39 @@
             bind-address=0.0.0.0
 
             [mysql_cluster]
-            ndb-connectstring=ip-172-31-35-156.ec2.internal # location of management server
+            ndb-connectstring=mngmt_private_dns # location of management server
 
 - sudo systemctl restart mysql
 - sudo systemctl enable mysql
 
 ## 4. Verify installation
-- mysql -u root -p 
+
+- mysql -u root -p
 - Enter your password
 - SHOW ENGINE NDB STATUS \G
 - Verify that there are 3 data nodes as expected.
 
 ## 5. Setup Sakila
-- wget https://downloads.mysql.com/docs/sakila-db.tar.gz 
-- sudo tar -xvzf sakila-db.tar.gz 
+
+- wget https://downloads.mysql.com/docs/sakila-db.tar.gz
+- sudo tar -xvzf sakila-db.tar.gz
 - sudo cp -r sakila-db /tmp/
 - mysql -u root -p
 - SOURCE /tmp/sakila-db/sakila-schema.sql;
 - SOURCE /tmp/sakila-db/sakila-data.sql;
 - USE sakila;
 - SHOW FULL TABLES;
-- You should see the sakila tables. 
-
+- You should see the sakila tables.
 
 ## 6. Add a user for the proxy
+
 - CREATE USER 'usrname'@'proxy_public_ip' IDENTIFIED BY 'password';
-- GRANT ALL PRIVILEGES ON * . * TO 'usrname'@'proxy_public_ip';
+- GRANT ALL PRIVILEGES ON _ . _ TO 'usrname'@'proxy_public_ip';
+
+## 7. Benchmarking your cluster or standalone
+
+    sudo sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-user=root --mysql-password='root' --mysql_storage_engine=ndbcluster --mysql-db=sakila --threads=nb_threads --db-driver=mysql --tables=nb_tables --table-size=table_size prepare
+
+    sudo sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-user=root --mysql-password='root' --mysql_storage_engine=ndbcluster --mysql-db=sakila --threads=nb_threads --db-driver=mysql --tables=nb_tables --table-size=table_size run
+
+    sudo sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-user=root --mysql-password='root' --mysql_storage_engine=ndbcluster --mysql-db=sakila --threads=nb_threads --db-driver=mysql --tables=nb_tables --table-size=table_size cleanup
