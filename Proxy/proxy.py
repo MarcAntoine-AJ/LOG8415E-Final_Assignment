@@ -5,7 +5,7 @@ import random
 from pythonping import ping
 from sshtunnel import SSHTunnelForwarder
 
-def connect(slave_ip, master_ip, query):
+def execute(slave_ip, master_ip, query):
     with SSHTunnelForwarder (slave_ip, ssh_username='ubuntu', ssh_pkey='keypair.pem', remote_bind_address=(master_ip, 3306)) as tunnel:
         conn = pymysql.connect(host=master_ip, user='user', password='password', db='sakila', port=3306, autocommit=True)
         print(conn)
@@ -32,17 +32,17 @@ def lowest_res_slave(slaves):
 
 def direct_hit(management_node_ip, query):
     print('Sending Request to : ', management_node_ip)
-    connect(management_node_ip, management_node_ip, query)
+    execute(management_node_ip, management_node_ip, query)
 
 def random_hit(data_node_choices, management_node_ip, query):
     data_node_ip = random.choice(data_node_choices)
     print('Sending Request to : ', data_node_ip)
-    connect(data_node_ip, management_node_ip, query)
+    execute(data_node_ip, management_node_ip, query)
 
 def customized_hit(data_nodes, management_node_ip, query):
     lowest_ping_data_node = lowest_res_slave(data_nodes)
     print('Sending Request to : ', lowest_ping_data_node)
-    connect(lowest_ping_data_node, management_node_ip, query)
+    execute(lowest_ping_data_node, management_node_ip, query)
 
 if __name__ == "__main__":
     management_node_ip = sys.argv[1]
