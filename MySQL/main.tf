@@ -113,10 +113,10 @@ resource "tls_private_key" "pk" {
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "myKey" # Create "myKey" to AWS!!
+  key_name   = "myKey" # Create "keypair" to AWS.
   public_key = tls_private_key.pk.public_key_openssh
 
-  provisioner "local-exec" { # Create "myKey.pem" to your computer!!
+  provisioner "local-exec" { # Create "keypair.pem" to your computer.
     command = "'${nonsensitive(tls_private_key.pk.private_key_pem)}' | Out-File -FilePath ..\\Proxy\\keypair.pem"
     interpreter = ["PowerShell", "-Command"]
   }
