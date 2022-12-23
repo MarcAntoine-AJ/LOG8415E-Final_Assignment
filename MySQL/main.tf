@@ -97,7 +97,7 @@ resource "aws_instance" "cluster-MYSQL-management-node" {
 
 resource "aws_instance" "proxy" {
   ami                    = "ami-0149b2da6ceec4bb0"
-  instance_type          = "t2.micro"
+  instance_type          = "t2.large"
   vpc_security_group_ids = [aws_security_group.security_gp.id]
   availability_zone      = "us-east-1c"
   key_name               = aws_key_pair.kp.key_name
