@@ -12,9 +12,9 @@ terraform {
 
 provider "aws" {
   region     = "us-east-1"
-  access_key = "ASIAZ3DCZEO2FZS5D2GU"
-  secret_key = "mmf2XGGW/FXS29/9tBi0OU71jStzakAsowj01y8p"
-  token      = "FwoGZXIvYXdzEDoaDA/pgPR5R3r5KIVVziLJAcdYhExlVr+/9zK5HRJTPvCtj2vpsXlzqcEPjr9oukjftyAbDZ+/rifpBtlOGdiEc16KxGr4sz1/H0ZCwREvV50Ibuz8lwCZPJple+itrKZCvsBD+G1VT+qY9Jl3SkkcYpjEVrVLK78yMjluFqyMxhb39YMGrF0E30PZZTOHMMmVWBpxn6b5YQU/Lv1p6Jk/bHpZcCJpeBcs18XfiOahsTaQMvPPKOggM9qnAAA48Tkuvm6JL+g2Y8fBAZhNsLklN6ABHKYq9Wzy+yiBjsqcBjItDYgHskTMwh/SXW4SLG7aYb1ycgdxyS6kY5FX0HBD/qLq+YyME3rqT2KUJCYH"
+  access_key = "ASIAZ3DCZEO2H63JWZPI"
+  secret_key = "8RGpgNRMFHVrHM6apUsJX83eS/W6DeHm6Ak/ccMF"
+  token      = "FwoGZXIvYXdzEIz//////////wEaDBTqmSHdNvL15mEyHSLJAcQe5gtRIJWinmW36l42y5BWnt0ZG8DVLcMAF242n7479jkpgSGkNBo33i5gODz0vPOcokpsUd/Bjhume/Zkraklhu75a2StlzsgH5Hnh1Z5i09QtyHx8LpmUwXG9pJ0gPuPGa8DwY/PFAyNNDFMrAuHDLh3i7QY3skwqNuNC3eChvcr8xR1Kh1Z25csJnTwHuTKJa7ohelmFMq4YtaZXoJyLk07ygp24nIQtsLFtWG6GgerHeKAefWZ8X6faWSLEb4uq8/N7jd8KyjCq5SdBjItzv+trkkHxRX7TBTNtxZwaI+8tpffD57HhMK/53LCJ/LEQqJcrqMVEr0WZ7kN"
 }
 
 
