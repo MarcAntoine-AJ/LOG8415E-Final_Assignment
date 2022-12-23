@@ -23,6 +23,7 @@ def lowest_res_slave(slaves):
     best_slave = None
     for slave in slaves:
         ping_time = ping_host(slave)
+        print("Ping Time: ", ping_time)
         if ping_time < min:
             best_slave = slave
             min = ping_time
