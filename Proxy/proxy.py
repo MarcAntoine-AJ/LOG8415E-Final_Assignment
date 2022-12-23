@@ -1,5 +1,6 @@
 import pymysql
 import sys
+import math
 import random
 from pythonping import ping
 from sshtunnel import SSHTunnelForwarder
@@ -18,9 +19,14 @@ def ping_host(host):
     return ping(target=host, count=1, timeout=2).rtt_avg_ms
 
 def lowest_res_slave(slaves):
-    response_times = [ping_host(slave) for slave in slaves]
-    fastest_slave = min(range(len(response_times)), key=response_times.__getitem__)
-    return fastest_slave
+    min = math.inf
+    best_slave = None
+    for slave in slaves:
+        ping_time = ping_host(slave)
+        if ping_time < min:
+            best_slave = slave
+            min = ping_time
+    return best_slave
 
 def direct_hit(management_node_ip, query):
     print('Sending Request to : ', management_node_ip)
@@ -48,4 +54,4 @@ if __name__ == "__main__":
     elif implementation_type == "random":
         random_hit([data_node_1_ip, data_node_2_ip, data_node_3_ip], management_node_ip, query)
     elif implementation_type == "customized":
-        customized_hit([data_node_1_ip, data_node_2_ip, data_node_3_ip],management_node_ip, query)
+        customized_hit([data_node_1_ip, data_node_2_ip, data_node_3_ip], management_node_ip, query)
