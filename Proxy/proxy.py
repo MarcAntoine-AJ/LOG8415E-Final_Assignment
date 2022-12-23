@@ -23,14 +23,17 @@ def lowest_res_slave(slaves):
     return fastest_slave
 
 def direct_hit(management_node_ip, query):
+    print('Sending Request to : ', management_node_ip)
     connect(management_node_ip, management_node_ip, query)
 
 def random_hit(data_node_choices, management_node_ip, query):
     data_node_ip = random.choice(data_node_choices)
+    print('Sending Request to : ', data_node_ip)
     connect(data_node_ip, management_node_ip, query)
 
 def customized_hit(data_nodes, management_node_ip, query):
     lowest_ping_data_node = lowest_res_slave(data_nodes)
+    print('Sending Request to : ', lowest_ping_data_node)
     connect(lowest_ping_data_node, management_node_ip, query)
 
 if __name__ == "__main__":
